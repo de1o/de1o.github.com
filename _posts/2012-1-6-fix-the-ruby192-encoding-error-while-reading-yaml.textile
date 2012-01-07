@@ -1,6 +1,6 @@
 ---
 layout: post
-title: ruby1.9+版本在使用jekyll时的编码问题
+title: Ruby1.9+版本在使用jekyll时的编码问题
 ---
 
 p(meta). 6 Jan 2012 - NanJing
@@ -9,22 +9,20 @@ p. clone了mojombo.github.com，用jekyll建_site的时候遇到错误：
 
 bc. readyaml invalid byte sequence in gb2312 (argument error) 
 
-p. 错误原因在https://github.com/mojombo/jekyll/issues/188.
-
-p. 链接里的人推荐Windows下在cmd里用
+p. 搜了一下"错误原因":https://github.com/mojombo/jekyll/issues/188.链接里推荐Windows下在cmd里用
 
 bc. set LC_ALL=en_US.UTF-8
 set LANG=en_US.UTF-8
 
-p. 貌似这种方法只能一次有效？另一个推荐是
+p. 貌似这种方法只能一次有效？另一个方法是
 
 bc. chcp 65001
 
-p. 但以我用python的时候折腾cmd编码的经验来看，还是别改cmd的编码了，暂时无法全部理清这部分头绪。会出很多问题。
+p. 但以我用python的时候折腾cmd编码的经验来看，还是别改cmd的编码了，暂时无法全部理清这部分头绪。会出很多问题。还有人推荐回退到Ruby1.8的版本，这种方法我不太喜欢。
 
-p. 一般在Windows下玩Github Page都是用Git Bash吧（本人才刚开始玩，轻拍），在 @Git\etc@ 里有个profile文件，在文件的末尾添加
+p. 一般在 Windows 下玩 Github Page 都是用 Git Bash 吧(本人才刚开始玩，轻拍)，本身就是模拟Linux Bash的MinGW肯定也有bash配置文件的，在 @Git\etc@ 里找到profile文件，在文件的末尾添加
 
 bc. export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
-这样每次启动Git Bash都可以设置好编码，再运行jekyll成功翻译出站点文件。
+这样每次启动Git Bash都会设置好编码，这样jekyll就可以成功翻译出站点文件。
