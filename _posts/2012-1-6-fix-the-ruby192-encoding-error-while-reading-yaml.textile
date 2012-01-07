@@ -9,7 +9,7 @@ p. clone了mojombo.github.com，用jekyll建_site的时候遇到错误：
 
 bc. readyaml invalid byte sequence in gb2312 (argument error) 
 
-p. 搜了一下"错误原因":https://github.com/mojombo/jekyll/issues/188.链接里推荐Windows下在cmd里用
+p. 搜了一下 "错误原因":https://github.com/mojombo/jekyll/issues/188 .链接里推荐Windows下在cmd里用
 
 bc. set LC_ALL=en_US.UTF-8
 set LANG=en_US.UTF-8
