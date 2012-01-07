@@ -1,0 +1,30 @@
+---
+layout: post
+title: ruby1.9+版本在使用jekyll时的编码问题
+---
+
+p(meta). 6 Jan 2012 - NanJing
+
+p. clone了mojombo.github.com，用jekyll建_site的时候遇到错误：
+
+bc. readyaml invalid byte sequence in gb2312 (argument error) 
+
+p. 错误原因在https://github.com/mojombo/jekyll/issues/188.
+
+p. 链接里的人推荐Windows下在cmd里用
+
+bc. set LC_ALL=en_US.UTF-8
+set LANG=en_US.UTF-8
+
+p. 貌似这种方法只能一次有效？另一个推荐是
+
+bc. chcp 65001
+
+p. 但以我用python的时候折腾cmd编码的经验来看，还是别改cmd的编码了，暂时无法全部理清这部分头绪。会出很多问题。
+
+p. 一般在Windows下玩Github Page都是用Git Bash吧（本人才刚开始玩，轻拍），在 @Git\etc@ 里有个profile文件，在文件的末尾添加
+
+bc. export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+
+这样每次启动Git Bash都可以设置好编码，再运行jekyll成功翻译出站点文件。
