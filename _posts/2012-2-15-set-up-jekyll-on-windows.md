@@ -6,6 +6,8 @@ title: 在 Windows 上安装 jekyll 环境
 {{page.title}}
 ==============
 
+<p class="meta">15 Feb 2012 - NanJing</p>
+
 在公司的机器上又配置了一遍jekyll。这种东西久了不操作就忘，还是把详细的步骤记下来比较好。
 
 1.  安装Ruby，在Windows上我们使用RubyInstaller这个工具（主站疑似被墙）。[上次][lasttime]装ruby192的时候遇到控制台编码问题（大概是jekyll的[问题][encodeissue]）。这次先选择了ruby187(?)，结果遇到 `` ERROR: While executing gem ... (TypeError)instance of Date needs to have method `marshal_load' `` 。搜了下没找到好办法，还是卸了187装回192。
