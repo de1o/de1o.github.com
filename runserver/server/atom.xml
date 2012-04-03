@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+ 
+ <title>delog</title>
+ <link href="http://degit.tk/atom.xml" rel="self"/>
+ <link href="http://degit.tk/"/>
+ <updated>2012-04-03T23:28:49+08:00</updated>
+ <id>http://degit.tk/</id>
+ <author>
+   <name>delo</name>
+   <email>deloeating@gmail.com</email>
+ </author>
+
+ 
+ <entry>
+   <title>debian中vi显示utf-8编码（Windows下ssh连接版）</title>
+   <link href="http://degit.tk/set-encoding-of-vi-on-debian-while-using-remote-access-via-windows"/>
+   <updated>2012-04-03T00:00:00+08:00</updated>
+   <id>http://tom.preston-werner.com/set-encoding-of-vi-on-debian-while-using-remote-access-via-windows</id>
+   <content type="html">&lt;h1&gt;debian中vi显示utf-8编码（Windows下ssh连接版）&lt;/h1&gt;
+
+&lt;p class=&quot;meta&quot;&gt;3 Apr 2012 - Nanjing&lt;/p&gt;
+
+
+&lt;p&gt;装好了markdoc后，用git把Windows机器上的项目提交上去，再在Linux上pull（还不知道怎么直接从仓库里得知最新版本的文件），结果发现带中文字的文件显示乱码。当然vi也无法输入中文，是一个一个的点点&lt;code&gt;...&lt;/code&gt;。Google折腾了一下，基本理解了一些概念。&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;Linux上的系统全局编码在&lt;code&gt;/etc/profile&lt;/code&gt;里通过&lt;code&gt;export LANG=&quot;zh_CN.UTF-8&quot;&lt;/code&gt;也就是LANG变量来指定。&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;而要显示和输入中文，系统必须加入中文字库，首先通过&lt;code&gt;apt-get install zhcon&lt;/code&gt;安装zhcon软件包。再 &lt;code&gt;less /usr/share/i18n/SUPPORTED&lt;/code&gt;查看支持的字库，找到zh_CN字样就说明有中文库。&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;编辑&lt;code&gt;/etc/locale.gen&lt;/code&gt;，把&lt;code&gt;zh_CN.GBK GBK&lt;/code&gt; &lt;code&gt;zh_CN.UTF-8 UTF-8&lt;/code&gt;所在行的注释取消。&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;执行脚本&lt;code&gt;usr/sbin/locale-gen&lt;/code&gt;来生成具有中文输入库的支持包。&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;编辑&lt;code&gt;/etc/profile&lt;/code&gt;，添加&lt;code&gt;export LANG=&quot;zh_CN.utf-8&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+
+&lt;p&gt;到这里debian的全局编码就设定为中文utf-8了。这时用vi编辑内容为utf-8编码的文件显示是正常的。但是，如果用vi去编辑GBK编码的文件又会显示为乱码，内容为GBK的文件还是有可能接触到的，所以我们需要设置vi使它能同时识别两种编码。&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;vi的编码可以在&lt;code&gt;~/.vimrc&lt;/code&gt;中设置（这样的设置只对当前用户生效？）其中和编码相关的值有：1) encoding: 默认根据locale设置，也就是说，上面&lt;code&gt;/etc/profile&lt;/code&gt;里设定的LANG值。只能在vim启动的时候设置一次，用户手册只建议在&lt;code&gt;~/.vimrc&lt;/code&gt;里改变它的值。 2) termencoding: terminal的编码，也就是用于屏幕显示的编码。 3) fileencoding: 文件的编码，也就是vi会按这里面声明的编码去解码文件的内容。可以设置多个值，按顺势尝试。&lt;/li&gt;
+&lt;/ol&gt;
+
+
+&lt;p&gt;如果&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>使用Python来提高工作效率</title>
+   <link href="http://degit.tk/using-python-to-accelerate-your-work"/>
+   <updated>2012-03-04T00:00:00+08:00</updated>
+   <id>http://tom.preston-werner.com/using-python-to-accelerate-your-work</id>
+   <content type="html">&lt;h1&gt;使用Python来提高工作效率&lt;/h1&gt;
+
+&lt;p class=&quot;meta&quot;&gt;4 Mar 2012 - NanJing&lt;/p&gt;
+
+
+&lt;p&gt;上星期接到个活，要对比某程序GET的图片，浏览器GET的图片，HTML代码里的&lt;code&gt;&amp;lt;img&amp;gt;&lt;/code&gt;标签src属性里的图片有哪些差异。也即比较哪些图片某程序没GET而浏览器GET了等等。测试要访问10个网站（譬如四大门户），每个网站独立重复五次，三个部分两两对比就是六次，也就是说要对比两个文件每两行是否一样300次（顺便，HTML里的&lt;code&gt;&amp;lt;img&amp;gt;&lt;/code&gt;好像还得&lt;code&gt;ctrl-F&lt;/code&gt;然后不断地下一个是吧）。单说网易，首页上&lt;code&gt;&amp;lt;img&amp;gt;&lt;/code&gt;标签有100+个，链接的文件名充斥着hfsuijfhgdo.jpg 这样的随机串，要用肉眼一一去对比简直是&lt;del&gt;bi&lt;/del&gt;自虐。但某人的原话是，我们当初就是这么&lt;del&gt;bi&lt;/del&gt;做的。&lt;/p&gt;
+
+&lt;p&gt;Whatever，既然我学过python这把人挡杀人，佛挡杀佛的&lt;a href=&quot;http://coolshell.cn/articles/6639.html&quot;&gt;电锯&lt;/a&gt;，现在就拿出来练练。首先，某程序GET过的图片从数据库里导出成app.txt，这里用的是toad的功能（当然python也能和数据库交互，也确实很简单，但当时不想把战线拉太长就直接用toad了）。浏览器的GET记录用HTTP Analyze导出成brow.txt。这里还有一个累人的点是每次浏览器访问之前必须把缓存清空，以免造成有缓存而不GET的情况（好吧其实这里也可以用脚本搞定）。而HTML源码里的&lt;code&gt;&amp;lt;img&amp;gt;&lt;/code&gt;如何全获取出来是需要解决的问题。&lt;/p&gt;
+
+&lt;p&gt;一开始我尝试使用SGMLParser。参照Dive into Python里的相关内容，定义了starttag_img函数。在&lt;code&gt;qq.com&lt;/code&gt;测试的时候很棒，抓取出来的链接和ctrl-F找到的&lt;code&gt;&amp;lt;img&amp;gt;&lt;/code&gt;一样多，跑到&lt;code&gt;www.sohu.com&lt;/code&gt;的时候傻眼了，少了若干条。搜索发现是SGMLParser里的正则匹配没有考虑中文，所以当遇到&lt;code&gt;&amp;lt;img alt=中文 src='somelink'&amp;gt;&lt;/code&gt;这样，alt属性的内容不加引号而src属性又在alt之后的不规范写法时，SGMLParser就傻眼了。至于HTMLParser对中文的支持貌似更差，压根就没跑起来。另外，某些写在js里else语句之后的&lt;code&gt;&amp;lt;img&amp;gt;&lt;/code&gt;没有被SGMLParser纳入，难道其中还带运行js然后判断某行是否被动态写入了的功能（浏览器的GET记录里也没有这张图片）？不能完全地搜索出HTML里所有的&lt;code&gt;&amp;lt;img&amp;gt;&lt;/code&gt;会给后期的对比增加工作量。所以我决定自己写一个正则来匹配。诸多周折，最终用来获取&lt;code&gt;&amp;lt;img&amp;gt;&lt;/code&gt;的脚本不是完美的，但对于此项工作来说，perfect enough!&lt;/p&gt;
+
+&lt;p&gt;由此得到了三个文件，文件的每一行是一个链接，找出两两之间独有的链接即可。数据量很小，直接用&lt;code&gt;if line is in list&lt;/code&gt;解决。&lt;/p&gt;
+
+&lt;p&gt;社交网络这样的影片给人一种编程很Cool的印象，但实际上有很多乏味的工作，尤其是当你的领导don't give a shit on efficiency( they just think to &lt;del&gt;bi&lt;/del&gt; is fine...)。对我来说，反而可以抓住这些机会，来锻炼自己对Python的应用，来利用它高效地完成一些处理（或者是shell script，乃至其他一切可以提高效率的方法）。更进一步地，可以用Python来进行测试，算法，编码规范的快速实现。等一切验证好了，再用C来实现。所以并不是我加入了一个使用C的公司，就用不到Python了。&lt;/p&gt;
+
+&lt;p&gt;P.S.&lt;/p&gt;
+
+&lt;p&gt;即使在整理好了这些链接之后，分析，整理其中五个网站的报告依旧花了我两个小时。我很讨厌这种重复的劳动，但这些对于改进某程序不能说是没有意义的。所以我必须去做。在对业务理解不深的情况下，我也没有更多有意义的话可说了。实际上我也在反省自己，关于小团姐说的stay slow。新加入一个公司，觉得很多东西不合理，不agile，认为上司低估自己的实力，在我第一次遇到的时候，难免心怀愤懑。这些理应是人际交往中的问题。有些我应该尝试去接受，去把自己发怒的阈值调高。此外，我对软件开发过程的理解依旧浅薄，比如上次我希望通过shell脚本来实现服务器程序的自动升级，结果到最后，某人说这些事本来是技术支持在做，如果开发擅自举动，最终是提高效率还是降低效率很难说。并不是说我就接受了这个解释，只是想表明软件开发中实际上有那么些想当然想不到的事。所以慢下来，每天进步一点，直到找到清晰的目标去追逐，戒骄戒躁（喂你有毛的资格骄躁），学习技术的同时也锻炼下修养吧。&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>在 Windows 上安装 jekyll 环境</title>
+   <link href="http://degit.tk/set-up-jekyll-on-windows"/>
+   <updated>2012-02-15T00:00:00+08:00</updated>
+   <id>http://tom.preston-werner.com/set-up-jekyll-on-windows</id>
+   <content type="html">&lt;h1&gt;在 Windows 上安装 jekyll 环境&lt;/h1&gt;
+
+&lt;p class=&quot;meta&quot;&gt;15 Feb 2012 - NanJing&lt;/p&gt;
+
+
+&lt;p&gt;在公司的机器上又配置了一遍jekyll。这种东西久了不操作就忘，还是把详细的步骤记下来比较好。&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;安装Ruby，在Windows上我们使用RubyInstaller这个工具（主站疑似被墙）。&lt;a href=&quot;/fix-the-ruby192-encoding-error-while-reading-yaml/&quot;&gt;上次&lt;/a&gt;装ruby192的时候遇到控制台编码问题（大概是jekyll的&lt;a href=&quot;https://github.com/imathis/octopress/issues/232&quot;&gt;问题&lt;/a&gt;）。这次先选择了ruby187(?)，结果遇到 &lt;code&gt;ERROR: While executing gem ... (TypeError)instance of Date needs to have method `marshal_load'&lt;/code&gt; 。搜了下没找到好办法，还是卸了187装回192。&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;此时还不能通过gem安装jekyll。会遇到 &lt;code&gt;Failed to build gem native extension&lt;/code&gt; 的错误。于是我们需要&lt;a href=&quot;https://github.com/oneclick/rubyinstaller/downloads/&quot;&gt;RubyInstaller DevKit&lt;/a&gt;。下载好自解压文件后按&lt;a href=&quot;https://github.com/oneclick/rubyinstaller/wiki/development-kit&quot;&gt;Wiki&lt;/a&gt;里的步骤配置。&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;这个时候就能通过 &lt;code&gt;gem install jekyll&lt;/code&gt; 来安装jekyll了。需要提醒的是，gem的官方源被墙干扰，建议换taobao源。执行 &lt;code&gt;gem source http://ruby.taobao.org&lt;/code&gt; 即可。安装可能会失败，这是由于需要安装其他的依赖包，按提示install就行。&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;安装好进入本地github page repo所在目录。执行 &lt;code&gt;jekyll --server&lt;/code&gt; 开启服务器。这时会报编码问题。建议不要使用Windows的cmd，gitbash是个不错的选择，前提是你使用的为安装版git而非Portable版。Portable版无法拿到Windows环境变量（也许可以通过配置profile达到效果但我对路径的处理有点迷惑，暂时不考虑了），无法在其中使用Ruby相关命令。假设你已经在使用安装版的git，打开 &lt;code&gt;$YOUR_GIT_DIR/etc/profile&lt;/code&gt; 在最后加入&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;即可。&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;建议把md解释器由默认的Maruku换成RDiscount。首先 &lt;code&gt;gem install rdiscount&lt;/code&gt; ，然后在站点的_config.yml 里把markdown后面改为 rdiscount。效率高而且对中文字符的支持好。（忘记在哪里看到的了，如果不是请批评）&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+
+&lt;p&gt;P.S. 一直不知道怎么在gitbash里粘贴，每次输入token，repo link的时候就蛋疼得不行。今天偶然发现用编辑区的insert搞定XDD&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Github Push免输入密码</title>
+   <link href="http://degit.tk/github-verification-by-sshkey"/>
+   <updated>2012-02-15T00:00:00+08:00</updated>
+   <id>http://tom.preston-werner.com/github-verification-by-sshkey</id>
+   <content type="html">&lt;h1&gt;Github Push免输入密码&lt;/h1&gt;
+
+&lt;p class=&quot;meta&quot;&gt;15 Feb 2012 @NanJing&lt;/p&gt;
+
+
+&lt;p&gt;今天重装Git。Push的时候需要github帐户的密码，和我以前遇到的情况不太一样。搜了一下，原来是由push的方式决定的，当通过ssh push的时候，就使用ssh key和相应的密码验证，而使用https push就要验证github帐户的密码。只要在 &lt;code&gt;$REPO_DIR/.git/config&lt;/code&gt; 里把origin的url字段改成 &lt;code&gt;git@github.com:your_usr_name/your_repo_name.git&lt;/code&gt; 。&lt;/p&gt;
+
+&lt;p&gt;然而，即使用ssh key，也会在每次push的时候要求passphrase。为避免繁琐，github提供了一种&lt;a href=&quot;http://help.github.com/ssh-key-passphrases/&quot;&gt;方法&lt;/a&gt;，通过一个ssh-agent来把你的密码加密保存，在每次需要的时候自动帮你输入。链接中没有提到Windows的设置方法，很简单，把以下内容加到 &lt;code&gt;$GIT_DIR/etc/profile&lt;/code&gt; 最后即可。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;SSH_ENV=&quot;$HOME/.ssh/environment&quot;
+
+# start the ssh-agent
+function start_agent {
+    echo &quot;Initializing new SSH agent...&quot;
+    # spawn ssh-agent
+    ssh-agent | sed 's/^echo/#echo/' &amp;gt; &quot;$SSH_ENV&quot;
+    echo succeeded
+    chmod 600 &quot;$SSH_ENV&quot;
+    . &quot;$SSH_ENV&quot; &amp;gt; /dev/null
+    ssh-add
+}
+
+# test for identities
+function test_identities {
+    # test whether standard identities have been added to the agent already
+    ssh-add -l | grep &quot;The agent has no identities&quot; &amp;gt; /dev/null
+    if [ $? -eq 0 ]; then
+        ssh-add
+        # $SSH_AUTH_SOCK broken so we start a new proper agent
+        if [ $? -eq 2 ];then
+            start_agent
+        fi
+    fi
+}
+
+# check for running ssh-agent with proper $SSH_AGENT_PID
+if [ -n &quot;$SSH_AGENT_PID&quot; ]; then
+    ps -ef | grep &quot;$SSH_AGENT_PID&quot; | grep ssh-agent &amp;gt; /dev/null
+    if [ $? -eq 0 ]; then
+    test_identities
+    fi
+# if $SSH_AGENT_PID is not properly set, we might be able to load one from
+# $SSH_ENV
+else
+    if [ -f &quot;$SSH_ENV&quot; ]; then
+    . &quot;$SSH_ENV&quot; &amp;gt; /dev/null
+    fi
+    ps -ef | grep &quot;$SSH_AGENT_PID&quot; | grep -v grep | grep ssh-agent &amp;gt; /dev/null
+    if [ $? -eq 0 ]; then
+        test_identities
+    else
+        start_agent
+    fi
+fi
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;其余设置参照链接中。&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Ruby1.9+版本在使用jekyll时的编码问题</title>
+   <link href="http://degit.tk/fix-the-ruby192-encoding-error-while-reading-yaml"/>
+   <updated>2012-01-06T00:00:00+08:00</updated>
+   <id>http://tom.preston-werner.com/fix-the-ruby192-encoding-error-while-reading-yaml</id>
+   <content type="html">&lt;h1&gt;Ruby1.9+版本在使用jekyll时的编码问题&lt;/h1&gt;
+
+&lt;p class=&quot;meta&quot;&gt;6 Jan 2012 - NanJing&lt;/p&gt;
+
+
+&lt;p&gt;clone了mojombo.github.com，用jekyll建_site的时候遇到错误：&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;readyaml invalid byte sequence in gb2312 (argument error)&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;搜了一下找到&lt;a href=&quot;https://github.com/mojombo/jekyll/issues/188&quot;&gt;这个&lt;/a&gt;。里面推荐Windows下在cmd里用&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;bc. set LC_ALL=en_US.UTF-8
+set LANG=en_US.UTF-8
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;貌似这种方法只能一次有效？另一个方法是&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;chcp 65001
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;但以我用python的时候折腾cmd编码的经验来看，还是别改cmd的编码了，暂时无法全部理清这部分头绪。会出很多问题。还有人推荐回退到Ruby1.8的版本，这种方法我不太喜欢。&lt;/p&gt;
+
+&lt;p&gt;一般在Windows下玩Github Page都是用GitBash吧(本人才刚开始玩，轻拍)，本身就是模拟Linux Bash的MinGW肯定也有bash配置文件的，在 &lt;code&gt;Git\etc&lt;/code&gt; 里找到profile文件，在文件的末尾添加&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;这样每次启动Git Bash都会设置好编码，jekyll就可以成功翻译出站点文件。&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>AHK速拨VPN</title>
+   <link href="http://degit.tk/dial-vpn-quickly-with-AHK"/>
+   <updated>2011-12-30T00:00:00+08:00</updated>
+   <id>http://tom.preston-werner.com/dial-vpn-quickly-with-AHK</id>
+   <content type="html">&lt;h1&gt;AHK速拨VPN&lt;/h1&gt;
+
+&lt;p class=&quot;meta&quot;&gt;30 Dec 2011 - NanJing&lt;/p&gt;
+
+
+&lt;p&gt;这两天在研究AHK，平时在PC上做的重复工作太多了。比如拨VPN这一项（用Proxy SwitchySharp管Chrome的SSH总是感觉莫名的lag，失去耐心了），点来点去累死人。想写个脚本自动拨/断开VPN，一开始用的是vpn连接的快捷方式，模拟键盘点击。这样就不知道怎么断开了=。=断开界面的快捷方式找不到也。所以就想用cmd命令连吧，在XP下的时候发现连了vpn就有个名字带“vpn”的进程，想检测其存在就断开，回到Windows 7下米有了，和vpn有关的那个Wmi进程不管连不连都存在，第一次写bat太不熟悉了，后来想到一个办法：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;rasdial vps /disconnect|findstr 没有连接 &amp;amp;&amp;amp; rasdial vps usrname passwd
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;先尝试断开连接，如果返回没有连接就运行拨号命令，否则就断开。
+然后在AHK script里加上 &lt;code&gt;#v:: run “~\vps.bat”&lt;/code&gt; 只要按下win+v就可以自动拨号/断开了。&lt;/p&gt;
+
+&lt;p&gt;update1:&lt;br/&gt;
+忘记说了，通常我把批处理文件和快捷方式放在一个文件夹里，要运行文件夹里的批处理文件的话需要把这个文件夹加入Path环境变量。如何加自行Google。&lt;/p&gt;
+
+&lt;p&gt;update2:&lt;br/&gt;
+注意bat文件以ANSI方式编码。&lt;/p&gt;
+
+&lt;p&gt;update3:&lt;br/&gt;
+想玩Github了就把这个只有一行的脚本传上去了，就当HelloWorld吧，更新了一下，把控制台的提示信息改得合理了一些（喂快滚去复习离散数学啊！&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>PuTTY配色</title>
+   <link href="http://degit.tk/PuTTY-Schemes"/>
+   <updated>2011-12-30T00:00:00+08:00</updated>
+   <id>http://tom.preston-werner.com/PuTTY-Schemes</id>
+   <content type="html">&lt;h1&gt;PuTTY配色&lt;/h1&gt;
+
+&lt;p class=&quot;meta&quot;&gt;30 Dec 2011 - NanJing&lt;/p&gt;
+
+
+&lt;p&gt;和&lt;a href=&quot;http://www.igvita.com/2008/04/14/custom-putty-color-themes/&quot;&gt;这位&lt;/a&gt;仁兄说的一样，PuTTY的默认配色真是瞎狗眼，昨个折腾vim的时候找了点配色方案。&lt;/p&gt;
+
+&lt;blockquote&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/altercation/solarized/tree/master/putty-colors-solarized&quot;&gt;solarized&lt;/a&gt;&lt;br/&gt;
+&lt;a href=&quot;http://www.igvita.com/download.php?file=http://www.igvita.com/downloads/igvita-desert.reg&quot;&gt;igvita-desert&lt;/a&gt;&lt;/p&gt;&lt;/blockquote&gt;
+
+&lt;p&gt;下载.reg，双击，哦了。&lt;/p&gt;
+
+&lt;p&gt;P.S. PuTTY Tray 貌似是个好东东。&lt;/p&gt;
+
+&lt;p&gt;update:刚瞄了一眼，它的特性没对我特别有吸引力，而且作者已经停止开发了… so…&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>解决Apache不能启动的问题</title>
+   <link href="http://degit.tk/Apache-cannot-run"/>
+   <updated>2011-12-30T00:00:00+08:00</updated>
+   <id>http://tom.preston-werner.com/Apache-cannot-run</id>
+   <content type="html">&lt;h1&gt;解决Apache不能启动的问题&lt;/h1&gt;
+
+&lt;p class=&quot;meta&quot;&gt;30 Dec 2011 - Nanjing&lt;/p&gt;
+
+
+&lt;p&gt;淫长在装Apache的时候遇到了问题，本来以为是端口什么的结果不是，最后查error.log发现: &lt;code&gt;(OS 10022)提供了一个无效的参数。 : Child 2848: setup_inherited_listeners(), WSASocket failed to open the inherited socket.&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;搜索了下，取消了查询LMHOSTS解决问题。刚又搜了下原理发现是winsock接口上的一些blabla。所以Apache启动排错可以：&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;检查端口&lt;/li&gt;
+&lt;li&gt;检查httpd.conf配置&lt;/li&gt;
+&lt;li&gt;取消查询LMHOSTS&lt;/li&gt;
+&lt;li&gt;netsh winsock reset 修复winsock&lt;/li&gt;
+&lt;/ol&gt;
+
+</content>
+ </entry>
+ 
+ 
+</feed>

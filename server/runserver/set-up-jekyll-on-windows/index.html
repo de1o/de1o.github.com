@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+   <title>在 Windows 上安装 jekyll 环境</title>
+   <meta name="author" content="delo" />
+   <link href="http://feeds.feedburner.com/degit" rel="alternate" title="delog" type="application/atom+xml" />
+
+   <!-- syntax highlighting CSS -->
+   <link rel="stylesheet" href="/css/syntax.css" type="text/css" />
+
+   <!-- Homepage CSS -->
+   <link rel="stylesheet" href="/css/screen.css" type="text/css" media="screen, projection" />
+
+   <!-- Typekit -->
+   <script type="text/javascript" src="http://use.typekit.com/jpd0pfm.js"></script>
+   <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+
+<!-- ClickTale Top part -->
+<script type="text/javascript">
+var WRInitTime=(new Date()).getTime();
+</script>
+<!-- ClickTale end of Top part -->
+
+<div class="site">
+  <div class="title">
+    <a href="/">delog</a>
+    <a class="extra" href="/">home</a>
+  </div>
+  
+  <div id="post">
+<h1>在 Windows 上安装 jekyll 环境</h1>
+
+<p class="meta">15 Feb 2012 - NanJing</p>
+
+
+<p>在公司的机器上又配置了一遍jekyll。这种东西久了不操作就忘，还是把详细的步骤记下来比较好。</p>
+
+<ol>
+<li><p>安装Ruby，在Windows上我们使用RubyInstaller这个工具（主站疑似被墙）。<a href="/fix-the-ruby192-encoding-error-while-reading-yaml/">上次</a>装ruby192的时候遇到控制台编码问题（大概是jekyll的<a href="https://github.com/imathis/octopress/issues/232">问题</a>）。这次先选择了ruby187(?)，结果遇到 <code>ERROR: While executing gem ... (TypeError)instance of Date needs to have method `marshal_load'</code> 。搜了下没找到好办法，还是卸了187装回192。</p></li>
+<li><p>此时还不能通过gem安装jekyll。会遇到 <code>Failed to build gem native extension</code> 的错误。于是我们需要<a href="https://github.com/oneclick/rubyinstaller/downloads/">RubyInstaller DevKit</a>。下载好自解压文件后按<a href="https://github.com/oneclick/rubyinstaller/wiki/development-kit">Wiki</a>里的步骤配置。</p></li>
+<li><p>这个时候就能通过 <code>gem install jekyll</code> 来安装jekyll了。需要提醒的是，gem的官方源被墙干扰，建议换taobao源。执行 <code>gem source http://ruby.taobao.org</code> 即可。安装可能会失败，这是由于需要安装其他的依赖包，按提示install就行。</p></li>
+<li><p>安装好进入本地github page repo所在目录。执行 <code>jekyll --server</code> 开启服务器。这时会报编码问题。建议不要使用Windows的cmd，gitbash是个不错的选择，前提是你使用的为安装版git而非Portable版。Portable版无法拿到Windows环境变量（也许可以通过配置profile达到效果但我对路径的处理有点迷惑，暂时不考虑了），无法在其中使用Ruby相关命令。假设你已经在使用安装版的git，打开 <code>$YOUR_GIT_DIR/etc/profile</code> 在最后加入</p>
+
+<pre><code>export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+</code></pre>
+
+<p>即可。</p></li>
+<li><p>建议把md解释器由默认的Maruku换成RDiscount。首先 <code>gem install rdiscount</code> ，然后在站点的_config.yml 里把markdown后面改为 rdiscount。效率高而且对中文字符的支持好。（忘记在哪里看到的了，如果不是请批评）</p></li>
+</ol>
+
+
+<p>P.S. 一直不知道怎么在gitbash里粘贴，每次输入token，repo link的时候就蛋疼得不行。今天偶然发现用编辑区的insert搞定XDD</p>
+
+</div>
+
+<div id="related">
+  <h2>Related Posts</h2>
+  <ul class="posts">
+    
+      <li><span>04 Mar 2012</span> &raquo; <a href="/using-python-to-accelerate-your-work">使用Python来提高工作效率</a></li>
+    
+      <li><span>15 Feb 2012</span> &raquo; <a href="/github-verification-by-sshkey">Github Push免输入密码</a></li>
+    
+      <li><span>06 Jan 2012</span> &raquo; <a href="/fix-the-ruby192-encoding-error-while-reading-yaml">Ruby1.9+版本在使用jekyll时的编码问题</a></li>
+    
+  </ul>
+</div>
+  
+  <div class="footer">
+    <div class="contact">
+      <p>
+        delo<br />
+        A newbie programmer<br />
+        deloeating@gmail.com
+      </p>
+    </div>
+    <div class="contact">
+      <p>
+        <a href="http://github.com/deloeating/">github.com/deloeating</a><br />
+        <a href="http://twitter.com/oddnuo/">twitter.com/oddnuo</a><br />
+        <a href="http://about.me/delo">about.me/delo</a>
+      </p>
+    </div>
+    <div class="rss">
+      <a href="http://feeds.feedburner.com/degit">
+        <img src="/images/rss.png" alt="Subscribe to RSS Feed" />
+      </a>
+    </div>
+  </div>
+</div>
+
+<a href="http://github.com/deloeating"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub" /></a>
+
+</body>
+</html>

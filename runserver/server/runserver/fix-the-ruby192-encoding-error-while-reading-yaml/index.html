@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+   <title>Ruby1.9+版本在使用jekyll时的编码问题</title>
+   <meta name="author" content="delo" />
+   <link href="http://feeds.feedburner.com/degit" rel="alternate" title="delog" type="application/atom+xml" />
+
+   <!-- syntax highlighting CSS -->
+   <link rel="stylesheet" href="/css/syntax.css" type="text/css" />
+
+   <!-- Homepage CSS -->
+   <link rel="stylesheet" href="/css/screen.css" type="text/css" media="screen, projection" />
+
+   <!-- Typekit -->
+   <script type="text/javascript" src="http://use.typekit.com/jpd0pfm.js"></script>
+   <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+
+<!-- ClickTale Top part -->
+<script type="text/javascript">
+var WRInitTime=(new Date()).getTime();
+</script>
+<!-- ClickTale end of Top part -->
+
+<div class="site">
+  <div class="title">
+    <a href="/">delog</a>
+    <a class="extra" href="/">home</a>
+  </div>
+  
+  <div id="post">
+<h1>Ruby1.9+版本在使用jekyll时的编码问题</h1>
+
+<p class="meta">6 Jan 2012 - NanJing</p>
+
+
+<p>clone了mojombo.github.com，用jekyll建_site的时候遇到错误：</p>
+
+<p><code>readyaml invalid byte sequence in gb2312 (argument error)</code></p>
+
+<p>搜了一下找到<a href="https://github.com/mojombo/jekyll/issues/188">这个</a>。里面推荐Windows下在cmd里用</p>
+
+<pre><code>bc. set LC_ALL=en_US.UTF-8
+set LANG=en_US.UTF-8
+</code></pre>
+
+<p>貌似这种方法只能一次有效？另一个方法是</p>
+
+<pre><code>chcp 65001
+</code></pre>
+
+<p>但以我用python的时候折腾cmd编码的经验来看，还是别改cmd的编码了，暂时无法全部理清这部分头绪。会出很多问题。还有人推荐回退到Ruby1.8的版本，这种方法我不太喜欢。</p>
+
+<p>一般在Windows下玩Github Page都是用GitBash吧(本人才刚开始玩，轻拍)，本身就是模拟Linux Bash的MinGW肯定也有bash配置文件的，在 <code>Git\etc</code> 里找到profile文件，在文件的末尾添加</p>
+
+<pre><code>export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+</code></pre>
+
+<p>这样每次启动Git Bash都会设置好编码，jekyll就可以成功翻译出站点文件。</p>
+
+</div>
+
+<div id="related">
+  <h2>Related Posts</h2>
+  <ul class="posts">
+    
+      <li><span>04 Mar 2012</span> &raquo; <a href="/using-python-to-accelerate-your-work">使用Python来提高工作效率</a></li>
+    
+      <li><span>15 Feb 2012</span> &raquo; <a href="/set-up-jekyll-on-windows">在 Windows 上安装 jekyll 环境</a></li>
+    
+      <li><span>15 Feb 2012</span> &raquo; <a href="/github-verification-by-sshkey">Github Push免输入密码</a></li>
+    
+  </ul>
+</div>
+  
+  <div class="footer">
+    <div class="contact">
+      <p>
+        delo<br />
+        A newbie programmer<br />
+        deloeating@gmail.com
+      </p>
+    </div>
+    <div class="contact">
+      <p>
+        <a href="http://github.com/deloeating/">github.com/deloeating</a><br />
+        <a href="http://twitter.com/oddnuo/">twitter.com/oddnuo</a><br />
+        <a href="http://about.me/delo">about.me/delo</a>
+      </p>
+    </div>
+    <div class="rss">
+      <a href="http://feeds.feedburner.com/degit">
+        <img src="/images/rss.png" alt="Subscribe to RSS Feed" />
+      </a>
+    </div>
+  </div>
+</div>
+
+<a href="http://github.com/deloeating"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub" /></a>
+
+</body>
+</html>

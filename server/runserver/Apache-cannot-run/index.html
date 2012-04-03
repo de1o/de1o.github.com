@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+   <title>解决Apache不能启动的问题</title>
+   <meta name="author" content="delo" />
+   <link href="http://feeds.feedburner.com/degit" rel="alternate" title="delog" type="application/atom+xml" />
+
+   <!-- syntax highlighting CSS -->
+   <link rel="stylesheet" href="/css/syntax.css" type="text/css" />
+
+   <!-- Homepage CSS -->
+   <link rel="stylesheet" href="/css/screen.css" type="text/css" media="screen, projection" />
+
+   <!-- Typekit -->
+   <script type="text/javascript" src="http://use.typekit.com/jpd0pfm.js"></script>
+   <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+
+<!-- ClickTale Top part -->
+<script type="text/javascript">
+var WRInitTime=(new Date()).getTime();
+</script>
+<!-- ClickTale end of Top part -->
+
+<div class="site">
+  <div class="title">
+    <a href="/">delog</a>
+    <a class="extra" href="/">home</a>
+  </div>
+  
+  <div id="post">
+<h1>解决Apache不能启动的问题</h1>
+
+<p class="meta">30 Dec 2011 - Nanjing</p>
+
+
+<p>淫长在装Apache的时候遇到了问题，本来以为是端口什么的结果不是，最后查error.log发现: <code>(OS 10022)提供了一个无效的参数。 : Child 2848: setup_inherited_listeners(), WSASocket failed to open the inherited socket.</code></p>
+
+<p>搜索了下，取消了查询LMHOSTS解决问题。刚又搜了下原理发现是winsock接口上的一些blabla。所以Apache启动排错可以：</p>
+
+<ol>
+<li>检查端口</li>
+<li>检查httpd.conf配置</li>
+<li>取消查询LMHOSTS</li>
+<li>netsh winsock reset 修复winsock</li>
+</ol>
+
+
+<script>alert('hello')</script>
+
+
+<p>和</p>
+
+</div>
+
+<div id="related">
+  <h2>Related Posts</h2>
+  <ul class="posts">
+    
+      <li><span>04 Mar 2012</span> &raquo; <a href="/using-python-to-accelerate-your-work">使用Python来提高工作效率</a></li>
+    
+      <li><span>15 Feb 2012</span> &raquo; <a href="/set-up-jekyll-on-windows">在 Windows 上安装 jekyll 环境</a></li>
+    
+      <li><span>15 Feb 2012</span> &raquo; <a href="/github-verification-by-sshkey">Github Push免输入密码</a></li>
+    
+  </ul>
+</div>
+  
+  <div class="footer">
+    <div class="contact">
+      <p>
+        delo<br />
+        A newbie programmer<br />
+        deloeating@gmail.com
+      </p>
+    </div>
+    <div class="contact">
+      <p>
+        <a href="http://github.com/deloeating/">github.com/deloeating</a><br />
+        <a href="http://twitter.com/oddnuo/">twitter.com/oddnuo</a><br />
+        <a href="http://about.me/delo">about.me/delo</a>
+      </p>
+    </div>
+    <div class="rss">
+      <a href="http://feeds.feedburner.com/degit">
+        <img src="/images/rss.png" alt="Subscribe to RSS Feed" />
+      </a>
+    </div>
+  </div>
+</div>
+
+<a href="http://github.com/deloeating"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub" /></a>
+
+</body>
+</html>

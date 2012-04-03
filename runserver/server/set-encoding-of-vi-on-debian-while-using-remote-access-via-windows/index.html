@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+   <title>debian中vi显示utf-8编码（Windows下ssh连接版）</title>
+   <meta name="author" content="delo" />
+   <link href="http://feeds.feedburner.com/degit" rel="alternate" title="delog" type="application/atom+xml" />
+
+   <!-- syntax highlighting CSS -->
+   <link rel="stylesheet" href="/css/syntax.css" type="text/css" />
+
+   <!-- Homepage CSS -->
+   <link rel="stylesheet" href="/css/screen.css" type="text/css" media="screen, projection" />
+
+   <!-- Typekit -->
+   <script type="text/javascript" src="http://use.typekit.com/jpd0pfm.js"></script>
+   <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+
+<!-- ClickTale Top part -->
+<script type="text/javascript">
+var WRInitTime=(new Date()).getTime();
+</script>
+<!-- ClickTale end of Top part -->
+
+<div class="site">
+  <div class="title">
+    <a href="/">delog</a>
+    <a class="extra" href="/">home</a>
+  </div>
+  
+  <div id="post">
+<h1>debian中vi显示utf-8编码（Windows下ssh连接版）</h1>
+
+<p class="meta">3 Apr 2012 - Nanjing</p>
+
+
+<p>装好了markdoc后，用git把Windows机器上的项目提交上去，再在Linux上pull（还不知道怎么直接从仓库里得知最新版本的文件），结果发现带中文字的文件显示乱码。当然vi也无法输入中文，是一个一个的点点<code>...</code>。Google折腾了一下，基本理解了一些概念。</p>
+
+<ol>
+<li><p>Linux上的系统全局编码在<code>/etc/profile</code>里通过<code>export LANG="zh_CN.UTF-8"</code>也就是LANG变量来指定。</p></li>
+<li><p>而要显示和输入中文，系统必须加入中文字库，首先通过<code>apt-get install zhcon</code>安装zhcon软件包。再 <code>less /usr/share/i18n/SUPPORTED</code>查看支持的字库，找到zh_CN字样就说明有中文库。</p></li>
+<li><p>编辑<code>/etc/locale.gen</code>，把<code>zh_CN.GBK GBK</code> <code>zh_CN.UTF-8 UTF-8</code>所在行的注释取消。</p></li>
+<li><p>执行脚本<code>usr/sbin/locale-gen</code>来生成具有中文输入库的支持包。</p></li>
+<li><p>编辑<code>/etc/profile</code>，添加<code>export LANG="zh_CN.utf-8</code></p></li>
+</ol>
+
+
+<p>到这里debian的全局编码就设定为中文utf-8了。这时用vi编辑内容为utf-8编码的文件显示是正常的。但是，如果用vi去编辑GBK编码的文件又会显示为乱码，内容为GBK的文件还是有可能接触到的，所以我们需要设置vi使它能同时识别两种编码。</p>
+
+<ol>
+<li>vi的编码可以在<code>~/.vimrc</code>中设置（这样的设置只对当前用户生效？）其中和编码相关的值有：1) encoding: 默认根据locale设置，也就是说，上面<code>/etc/profile</code>里设定的LANG值。只能在vim启动的时候设置一次，用户手册只建议在<code>~/.vimrc</code>里改变它的值。 2) termencoding: terminal的编码，也就是用于屏幕显示的编码。 3) fileencoding: 文件的编码，也就是vi会按这里面声明的编码去解码文件的内容。可以设置多个值，按顺势尝试。</li>
+</ol>
+
+
+<p>如果</p>
+
+</div>
+
+<div id="related">
+  <h2>Related Posts</h2>
+  <ul class="posts">
+    
+      <li><span>04 Mar 2012</span> &raquo; <a href="/using-python-to-accelerate-your-work">使用Python来提高工作效率</a></li>
+    
+      <li><span>15 Feb 2012</span> &raquo; <a href="/set-up-jekyll-on-windows">在 Windows 上安装 jekyll 环境</a></li>
+    
+      <li><span>15 Feb 2012</span> &raquo; <a href="/github-verification-by-sshkey">Github Push免输入密码</a></li>
+    
+  </ul>
+</div>
+  
+  <div class="footer">
+    <div class="contact">
+      <p>
+        delo<br />
+        A newbie programmer<br />
+        deloeating@gmail.com
+      </p>
+    </div>
+    <div class="contact">
+      <p>
+        <a href="http://github.com/deloeating/">github.com/deloeating</a><br />
+        <a href="http://twitter.com/oddnuo/">twitter.com/oddnuo</a><br />
+        <a href="http://about.me/delo">about.me/delo</a>
+      </p>
+    </div>
+    <div class="rss">
+      <a href="http://feeds.feedburner.com/degit">
+        <img src="/images/rss.png" alt="Subscribe to RSS Feed" />
+      </a>
+    </div>
+  </div>
+</div>
+
+<a href="http://github.com/deloeating"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub" /></a>
+
+</body>
+</html>
