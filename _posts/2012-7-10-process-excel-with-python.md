@@ -14,7 +14,8 @@ title:	python处理excel文件
 	rb = xlrd.open_workbook('test.xls')
 	sheet = rb.sheet_by_index(0)	#选择第一个标签页
 	sheet = rb.sheet_by_name(sheetName)
-	sheet.nrows, sheet.ncols, sheet.col(n), sheet.row(m), sheet.cell(m, n), sheet.cell(m, n).value
+	sheet.nrows, sheet.ncols, sheet.col(n), sheet.row(m), sheet.cell(m, n)
+	sheet.cell(m, n).value
 
 	import xlwt
 	wt = xlwt.Workbook()
