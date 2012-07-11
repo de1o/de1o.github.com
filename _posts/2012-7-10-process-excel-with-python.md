@@ -1,6 +1,6 @@
 ---
 layout: post
-title:	python处理excel文件
+title:  用Python处理Excel文件
 ---
 
 <p class="meta">10 Jul 2012 - Nanjing</p>
