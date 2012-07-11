@@ -3,6 +3,8 @@ layout: post
 title:  用Python处理Excel文件
 ---
 
+{{page.title}}
+
 <p class="meta">10 Jul 2012 - Nanjing</p>
 
 断断续续地帮朋友用python做了一些excel处理。发现每次都得查文档回忆方法的具体用法，很是浪费时间，故在此把常用的属性和方法记下来。
