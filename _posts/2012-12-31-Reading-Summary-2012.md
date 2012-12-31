@@ -22,7 +22,7 @@ title: 2012撸过的书
 
 6.	编程风格/素养系列：刚入职的时候看《代码大全》，基本对一些[常识](http://www.luanxiang.org/blog/archives/1371.html)有了概念，在编码过程中也实践了一些。有一段时间很纠结于TDD，作为一个底层的员工，在公司不执行TDD的前提下，我最多也只能对自己写的不涉及太多公司代码结构的函数来进行单元测试。某次写一个算法的时候草草而就报告说写好了，经理说给测试看了再说，结果测试一看抓出3，4个bug，边界条件全面失守，我只好狼狈地修改后验证每个测试用例。之后一天看Bob大叔的《Clean Coder》，里面提到要尽量防御自己的代码，让QA无虫可捉。我认识到，虽然理论上0bug无法做到，但这是一个应该有的态度。这个态度从《代码大全》的纸上谈兵难以深刻体会的，只能在更多的编码里吸取教训。不过直到不久之前，我还是会忘记检查系统调用返回的指针是否有效:(
 
-7.	C language进阶系列：《Point on C》《Expert C Programming》看过这两本之后总算对C的声明机制等等有了个比较清晰的了解，再也不用死背指针的指针，指针的数组，指向const值的指针和指向值的const指针了。
+7.	C language进阶系列：《Pointer on C》《Expert C Programming》看过这两本之后总算对C的声明机制等等有了个比较清晰的了解，再也不用死背指针的指针，指针的数组，指向const值的指针和指向值的const指针了。
 
 8.	Python：《Python Cookbook》《Dive into Python》中把平时会用到的一些章节看过，还有就是研究markdoc源码的时候因为看不懂去研究了后三章的Python高级特性——元类，装饰器，property等等。其他就是具体需要什么就去翻手册，熟悉了socket，urllib2/httplib2，telnetlib/ftplib几个网络编程常用的库，还有就是argparse，re这样的通用工具。jinja2/web.py/django都摸索了一下，django后端+jQueryUI-Mobile做了一个背单词玩具，web.py+jinja2接入了微博玩玩，基本属于验证文档的程度。目前觉得还是django更好用。2013也许会试试tornado/flask吧。
 
